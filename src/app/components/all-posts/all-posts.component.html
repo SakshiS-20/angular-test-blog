@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div><h4>All post</h4></div>
+    <div class="pull-right">
+      <input tpe="text" [(ngModel)]="searchInput" (keyup)="search();">
+      <button class="btn-sm btn-primary" (click)="search();">Search</button>
+      <button class="btn-sm btn-default" (click)="resetSearch();">reset</button>
+    </div>
+    <table class="table table-hover" *ngIf="posts && (posts.length>0)">
+      <thead>
+        <tr>
+          <th>Sno</th>
+          <th>Title</th>
+          <th>Url</th>
+          <th>Created At</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts; let i = index" (click)="postShow = post" data-toggle="modal" data-target="#postDetailModal">
+          <td>{{ i+1 }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.url }}</td>
+          <td>{{ post.created_at }}</td>
+          <td>{{ post.author}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!posts ||(posts.length == 0)">
+      <br><p>No Posts</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="postDetailModal" tabindex="-1" role="dialog" aria-labelledby="postDetailModalLabel" aria-hidden="true" *ngIf="postShow">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postDetailModalLabel">{{postShow.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <pre>{{ postShow | json }}</pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
